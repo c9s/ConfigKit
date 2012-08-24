@@ -1,9 +1,10 @@
 ConfigKit
 =============
 
-ConfigKit is a library for config files, it parses yaml config files for the
-first time, then compiles configs into php source files, so configs can be cached 
-in pure php, and can be in APC or any other cache backend system.
+ConfigKit is a library for config files and is designed for web frameworks, it
+parses yaml config files for the first time, then compiles configs into php
+source files, so configs can be cached in pure php, and can be in APC or any
+other cache backend system.
 
 ConfigKit is pretty simple, you only need to define your config file in YAML format,
 then use ConfigKit to load the config file.
@@ -33,5 +34,11 @@ You can manage multiple config files with ConfigLoader
     $loader->load( 'database', 'config/database.yml' );
 
 To get config stash
+
+    $paths = $loader->get('framework','web.paths');
+    $templates = $loader->get('framework','web.templates');
+
+
+
 
 
