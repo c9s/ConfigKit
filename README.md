@@ -28,7 +28,12 @@ The generated config cache is like below:
       'ApplicationUUID' => '9fc933c0-70f9-11e1-9095-3c07541dfc0c',
       'Domain' => 'phifty.dev',
 
-## API
+## Installation
+
+    pear channel-discover pear.corneltek.com
+    pear install corneltek/ConfigKit
+
+## Usage
 
 ### ConfigCompiler
 
