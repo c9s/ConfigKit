@@ -14,7 +14,6 @@ class ConfigCompiler
 {
     public static function _compile_file($sourceFile,$compiledFile) {
         $content = file_get_contents($sourceFile);
-
         if( strpos($content,'---') === 0 ) {
             $config = yaml_parse($content);
         } 
@@ -29,10 +28,15 @@ class ConfigCompiler
             throw new ConfigFileException('Unknown file format.');
         }
 
+        self::_write_config($compiledFile,$config);
+        return $config;
+    }
+
+    public static function _write_config($compiledFile, $config)
+    {
         if( file_put_contents( $compiledFile , '<?php return ' . var_export($config,true) . ';' ) === false ) {
             throw new ConfigFileException("Can not write config file.");
         }
-        return $config;
     }
 
     public static function compile($sourceFile,$compiledFile = null) { 
