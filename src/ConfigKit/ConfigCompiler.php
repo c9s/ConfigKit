@@ -7,13 +7,29 @@
  */
 namespace ConfigKit;
 use Exception;
+use ConfigFileException;
 
 class ConfigFileException extends Exception {  }
 
 class ConfigCompiler
 {
     public static function _compile_file($sourceFile,$compiledFile) {
-        $config = yaml_parse( file_get_contents( $sourceFile ) );
+        $content = file_get_contents($sourceFile);
+
+        if( strpos($content,'---') === 0 ) {
+            $config = yaml_parse($content);
+        } 
+        elseif(strpos($content,'<?php') === 0 ) {
+            $config = require $sourceFile;
+        } 
+        elseif(strpos($content,'{') === 0 ) {
+            // looks like a JSON
+            $config = json_decode($content);
+        } 
+        else {
+            throw new ConfigFileException('Unknown file format.');
+        }
+
         if( file_put_contents( $compiledFile , '<?php return ' . var_export($config,true) . ';' ) === false ) {
             throw new ConfigFileException("Can not write config file.");
         }
