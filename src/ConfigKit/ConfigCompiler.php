@@ -7,7 +7,6 @@
  */
 namespace ConfigKit;
 use Exception;
-use ConfigFileException;
 
 class ConfigFileException extends Exception {  }
 
