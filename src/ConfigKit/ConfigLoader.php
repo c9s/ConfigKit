@@ -11,6 +11,16 @@ class ConfigLoader
         return $this->stashes[ $section ] = ConfigCompiler::load($file);
     }
 
+    public function merge($section,$file)
+    {
+        if( isset($this->stashes[$section]) ) {
+            $config = ConfigCompiler::load($file);
+            $this->stashes[$section] = array_merge( $this->stashes[$section] , $config );
+        } else {
+            return $this->load($section,$file);
+        }
+    }
+
     /**
      * Allow more useful getter
      */
