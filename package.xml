@@ -10,11 +10,11 @@
     <email>cornelius.howl@gmail.com</email>
     <active>yes</active>
   </lead>
-  <date>2012-08-30</date>
-  <time>12:57:26</time>
+  <date>2012-09-02</date>
+  <time>02:29:44</time>
   <version>
-    <release>1.0.1</release>
-    <api>1.0.1</api>
+    <release>1.2.0</release>
+    <api>1.2.0</api>
   </version>
   <stability>
     <release>stable</release>
@@ -26,10 +26,15 @@
     <dir name="/">
       <file name="tests/bootstrap.php" role="test" md5sum="e4c6985b88e30c6aaccb18f2deac199c"/>
       <file name="tests/ConfigKit/ConfigCompilerTest.php" role="test" md5sum="e23acde8914f8944fbdc7696fb499f5e"/>
+      <file name="tests/ConfigKit/ConfigLoaderTest.php" role="test" md5sum="b94daa166c3a3f2bc01262a6b0dcaff4"/>
+      <file name="tests/ConfigKit/data/database.php" role="test" md5sum="a30f6be72b30f9ae15faf61f284e1ce5"/>
+      <file name="tests/ConfigKit/data/database.yml" role="test" md5sum="f154de34d8ee162e3df283b7f3eace7c"/>
       <file name="tests/ConfigKit/data/framework.yml" role="test" md5sum="d7b7aff335ede0fd1265c921d9e65520"/>
+      <file name="tests/ConfigKit/data/site_database.php" role="test" md5sum="a4f8d58c2da205cc052a74974e18328d"/>
+      <file name="tests/ConfigKit/data/site_database.yml" role="test" md5sum="976bdb5fdd236b439fa71e22b4e2653b"/>
       <file name="src/ConfigKit/Accessor.php" role="php" md5sum="ffca8088ee524c82169ae38c8de05618"/>
-      <file name="src/ConfigKit/ConfigCompiler.php" role="php" md5sum="934e2a936858baf64b32f4a6e01249f2"/>
-      <file name="src/ConfigKit/ConfigLoader.php" role="php" md5sum="afbc2b29a40d7fc1056c6b719f72d9fa"/>
+      <file name="src/ConfigKit/ConfigCompiler.php" role="php" md5sum="1f445754b2930af0801360378ba6eb8c"/>
+      <file name="src/ConfigKit/ConfigLoader.php" role="php" md5sum="ec70d38b54c1206ec53e67b048d140c7"/>
     </dir>
   </contents>
   <dependencies>
@@ -55,7 +60,12 @@
     <filelist>
       <install name="tests/bootstrap.php" as="bootstrap.php"/>
       <install name="tests/ConfigKit/ConfigCompilerTest.php" as="ConfigKit/ConfigCompilerTest.php"/>
+      <install name="tests/ConfigKit/ConfigLoaderTest.php" as="ConfigKit/ConfigLoaderTest.php"/>
+      <install name="tests/ConfigKit/data/database.php" as="ConfigKit/data/database.php"/>
+      <install name="tests/ConfigKit/data/database.yml" as="ConfigKit/data/database.yml"/>
       <install name="tests/ConfigKit/data/framework.yml" as="ConfigKit/data/framework.yml"/>
+      <install name="tests/ConfigKit/data/site_database.php" as="ConfigKit/data/site_database.php"/>
+      <install name="tests/ConfigKit/data/site_database.yml" as="ConfigKit/data/site_database.yml"/>
       <install name="src/ConfigKit/Accessor.php" as="ConfigKit/Accessor.php"/>
       <install name="src/ConfigKit/ConfigCompiler.php" as="ConfigKit/ConfigCompiler.php"/>
       <install name="src/ConfigKit/ConfigLoader.php" as="ConfigKit/ConfigLoader.php"/>

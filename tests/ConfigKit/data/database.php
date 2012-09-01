@@ -19,7 +19,7 @@
   array (
     'default' => 
     array (
-      'dsn' => 'pgsql:host=localhost;dbname=drshine_itsystem',
+      'dsn' => 'pgsql:host=localhost;dbname=testing',
       'user' => 'root',
       'pass' => 123123,
     ),
