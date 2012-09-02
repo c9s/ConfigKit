@@ -20,6 +20,8 @@ class ConfigLoaderTest extends PHPUnit_Framework_TestCase
         is('testing',$ds->pass);
 
         $config1 = $loader->getStashes();
+        ok($config1);
+
         $loader->writeStashes('tests/stashes.php');
         $config = $loader->loadStashes('tests/stashes.php');
         ok($config);
