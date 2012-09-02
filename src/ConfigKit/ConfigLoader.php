@@ -64,6 +64,11 @@ class ConfigLoader
         return $this->stashes = ConfigCompiler::load($file);
     }
 
+    public function getStashes()
+    {
+        return $this->stashes;
+    }
+
     /**
      * Allow more useful getter
      */
