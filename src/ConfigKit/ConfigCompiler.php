@@ -43,9 +43,14 @@ class ConfigCompiler
         if( ! $compiledFile ) {
             $p = strrpos($sourceFile,'.yml');
             if( $p === false ) {
-                throw new ConfigFileException("$sourceFile file extension yml not found.");
+                $p = strrpos($sourceFile,'.json');
             }
-            $compiledFile = substr($sourceFile,0,$p) . '.php';
+            // if file extension is not supported, just append the .php suffix
+            if( $p === false ) {
+                $compiledFile = $sourceFile . '.php';
+            } else {
+                $compiledFile = substr($sourceFile,0,$p) . '.php';
+            }
         }
         if( ! file_exists($compiledFile) 
             || (file_exists($compiledFile) && filemtime($sourceFile) > filemtime($compiledFile))
