@@ -11,10 +11,10 @@
     <active>yes</active>
   </lead>
   <date>2012-09-02</date>
-  <time>02:30:04</time>
+  <time>12:09:08</time>
   <version>
-    <release>1.2.0</release>
-    <api>1.2.0</api>
+    <release>1.2.1</release>
+    <api>1.2.1</api>
   </version>
   <stability>
     <release>stable</release>
@@ -33,7 +33,7 @@
       <file name="tests/ConfigKit/data/site_database.php" role="test" md5sum="a4f8d58c2da205cc052a74974e18328d"/>
       <file name="tests/ConfigKit/data/site_database.yml" role="test" md5sum="976bdb5fdd236b439fa71e22b4e2653b"/>
       <file name="src/ConfigKit/Accessor.php" role="php" md5sum="ffca8088ee524c82169ae38c8de05618"/>
-      <file name="src/ConfigKit/ConfigCompiler.php" role="php" md5sum="1f445754b2930af0801360378ba6eb8c"/>
+      <file name="src/ConfigKit/ConfigCompiler.php" role="php" md5sum="d16f9208d193e081e33d42c7d1313600"/>
       <file name="src/ConfigKit/ConfigLoader.php" role="php" md5sum="ec70d38b54c1206ec53e67b048d140c7"/>
     </dir>
   </contents>
