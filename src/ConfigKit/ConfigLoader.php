@@ -28,7 +28,10 @@ class ConfigLoader
 
 
     /**
-     * write section config to a file.
+     * Write section config to a file.
+     *
+     * @param string $section
+     * @param string $file
      */
     public function writeSection($section,$file)
     {
@@ -39,11 +42,27 @@ class ConfigLoader
         return ConfigCompiler::write_config($file,$config);
     }
 
+
+    /**
+     * Write config stashes to file.
+     *
+     * @param string $file
+     */
     public function writeStashes($file)
     {
         return ConfigCompiler::write_config($file,$this->stashes);
     }
 
+
+    /**
+     * Load stashes from config file directly.
+     *
+     * @param string $file
+     */
+    public function loadStashes($file)
+    {
+        return $this->stashes = ConfigCompiler::load($file);
+    }
 
     /**
      * Allow more useful getter
