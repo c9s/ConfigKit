@@ -24,7 +24,7 @@ modification time to decide whether to recompile yaml files.
 When APC extension is enabled, PHP source code can be cached in APC, so when 
 you require the pure php source file, it will be faster then reparsing it from yaml.
 
-The generated config PHP file is like below:
+A generated config PHP file is like:
 
 ```php
 <?php return array (
