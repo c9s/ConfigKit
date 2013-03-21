@@ -42,12 +42,12 @@ class ConfigCompiler
     public static function compile($sourceFile,$compiledFile = null) { 
         if( ! $compiledFile ) {
             // to .php
-            $compiledFile = futil_replace_extension($sourceFile, 'php');
+            $compiledFile = \futil_replace_extension($sourceFile, 'php');
         }
 
         if( ! file_exists($compiledFile)
             || (file_exists($compiledFile) 
-                && futil_mtime_compare($sourceFile, $compiledFile) > 0 )
+                && \futil_mtime_compare($sourceFile, $compiledFile) > 0 )
             ) {
             self::_compile_file($sourceFile,$compiledFile);
         }
