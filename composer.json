@@ -4,6 +4,8 @@
         "php": ">=5.3.0",
         "corneltek/fileutil": "1.6.*"
     },
-    "require-dev": { "corneltek/phpunit-testmore": "dev-master" },
+    "require-dev": { 
+        "corneltek/phpunit-testmore": "dev-master" 
+    },
     "autoload": { "psr-0": { "ConfigKit": "src" } }
 }
