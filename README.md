@@ -16,6 +16,7 @@ in APC or any other cache backend system.
 ConfigKit is simple and fast, all you need to do is defining your config file in
 YAML format, then use ConfigKit to load the config file.
 
+ConfigKit uses static methods because static methods are faster than object methods.
 
 It checks if a `{config file}.php` exists, if so, then checks the file
 modification time to decide whether to recompile yaml files.
