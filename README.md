@@ -34,6 +34,12 @@ A generated config PHP file is like:
       'Domain' => 'phifty.dev',
 ```
 
+
+## Requirement
+
+yaml extension
+
+
 ## Installation
 
 Composer:
