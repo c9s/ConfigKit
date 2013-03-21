@@ -25,6 +25,11 @@ class ConfigCompiler
             throw new ConfigFileException('Unknown file format.');
         }
         self::write_config($compiledFile,$config);
+
+        // inline apc cache
+        if (extension_loaded('apc')) {
+            apc_store($sourceFile . filemtime($sourceFile) , $config);
+        }
         return $config;
     }
 
@@ -50,7 +55,16 @@ class ConfigCompiler
         return $compiledFile;
     }
 
-    public static function load($sourceFile,$compiledFile = null) {
+    public static function load($sourceFile,$compiledFile = null) 
+    {
+        $cacheKey = $sourceFile . filemtime($sourceFile);
+        if (extension_loaded('apc')) {
+            if ( $cache = apc_fetch($cacheKey) ) {
+                return $cache;
+            }
+        }
+
+
         $file = self::compile($sourceFile,$compiledFile);
         return require $file;
     }
