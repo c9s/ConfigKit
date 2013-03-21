@@ -10,9 +10,6 @@ before_script:
   - sh -c "cd yaml-1.1.0 && phpize && ./configure > /dev/null && make > /dev/null && sudo make install && cd .."
   - rm -rf yaml-1.1.0 yaml-1.1.0.tgz
   - echo "extension=yaml.so" >> `php --ini | grep "Loaded Configuration" | sed -e "s|.*:\s*||"`
-  - curl http://install.onionphp.org/ | bash
-  - curl -O https://raw.github.com/c9s/Onion/master/onion
   - composer install --dev
-  - php onion install
 
 script: phpunit
