@@ -72,7 +72,7 @@ class ConfigLoader
     /**
      * Allow more useful getter
      */
-    function __get($name)
+    public function __get($name)
     {
         if( isset( $this->stashes[$name] )) {
             // It must be an array.
@@ -80,7 +80,7 @@ class ConfigLoader
         }
     }
 
-    function __isset($name) 
+    public function __isset($name) 
     {
         return isset($this->stashes[$name]);
     }
@@ -91,7 +91,7 @@ class ConfigLoader
      *
      * @return array
      */
-    function getSection($name)
+    public function getSection($name)
     {
         if( isset( $this->stashes[$name] )) {
             // It must be an array.
@@ -108,7 +108,7 @@ class ConfigLoader
      *
      * @return array
      */
-    function get($section, $key = null)
+    public function get($section, $key = null)
     {
         /*
         if( isset( $this->getterCache[ $key ] ) ) 

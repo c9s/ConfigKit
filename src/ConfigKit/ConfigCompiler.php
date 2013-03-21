@@ -12,6 +12,8 @@ class ConfigFileException extends Exception {  }
 
 class ConfigCompiler
 {
+    static $statCheck = true;
+
     public static function _compile_file($sourceFile,$compiledFile) 
     {
         $content = file_get_contents($sourceFile);
@@ -45,7 +47,6 @@ class ConfigCompiler
             // to .php
             $compiledFile = \futil_replace_extension($sourceFile, 'php');
         }
-
         if( ! file_exists($compiledFile)
             || (file_exists($compiledFile) 
                 && \futil_mtime_compare($sourceFile, $compiledFile) > 0 )
@@ -64,6 +65,11 @@ class ConfigCompiler
             }
         }
 
+        if ( ! self::$statCheck ) {
+            if ( file_exists($compiledFile) ) {
+                return require $compiledFile;
+            }
+        }
 
         $file = self::compile($sourceFile,$compiledFile);
         return require $file;
