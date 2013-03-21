@@ -12,35 +12,31 @@ class ConfigFileException extends Exception {  }
 
 class ConfigCompiler
 {
-    public static function _compile_file($sourceFile,$compiledFile) {
+    public static function _compile_file($sourceFile,$compiledFile) 
+    {
         $content = file_get_contents($sourceFile);
         if( strpos($content,'---') === 0 ) {
-            $config = yaml_parse($content);
-        } 
-        elseif(strpos($content,'<?php') === 0 ) {
+            $config = \yaml_parse($content);
+        } elseif(strpos($content,'{') === 0 ) {
+            $config = \json_decode($content);
+        } elseif(strpos($content,'<?php') === 0 ) {
             $config = require $sourceFile;
-        } 
-        elseif(strpos($content,'{') === 0 ) {
-            // looks like a JSON
-            $config = json_decode($content);
-        } 
-        else {
+        } else {
             throw new ConfigFileException('Unknown file format.');
         }
-
         self::write_config($compiledFile,$config);
         return $config;
     }
 
     public static function write_config($compiledFile, $config)
     {
-        if( file_put_contents( $compiledFile , '<?php return ' . var_export($config,true) . ';' ) === false ) {
+        if ( file_put_contents( $compiledFile , '<?php return ' . var_export($config,true) . ';' ) === false ) {
             throw new ConfigFileException("Can not write config file.");
         }
     }
 
     public static function compile($sourceFile,$compiledFile = null) { 
-        if( ! $compiledFile ) {
+        if ( ! $compiledFile ) {
             // to .php
             $compiledFile = \futil_replace_extension($sourceFile, 'php');
         }
