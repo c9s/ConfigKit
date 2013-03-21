@@ -37,7 +37,7 @@ A generated config PHP file is like:
 
 ## Requirement
 
-yaml extension
+YAML extension
 
 
 ## Installation
