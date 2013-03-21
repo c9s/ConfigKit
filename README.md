@@ -32,6 +32,16 @@ The generated config cache is like below:
 
 ## Installation
 
+From composer:
+
+```json
+{
+    "require": { 
+        "corneltek/configkit": "dev-master"
+    }
+}
+```
+
 ```sh
     pear channel-discover pear.corneltek.com
     pear install corneltek/ConfigKit
