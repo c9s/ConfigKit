@@ -41,7 +41,7 @@ Composer:
 ```json
 {
     "require": { 
-        "corneltek/configkit": "dev-master"
+        "corneltek/configkit": "1.3.*"
     }
 }
 ```
