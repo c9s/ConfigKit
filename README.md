@@ -1,6 +1,8 @@
 ConfigKit
 =============
 
+[![Build Status](https://travis-ci.org/c9s/php-ConfigKit.png?branch=master)](https://travis-ci.org/c9s/php-ConfigKit)
+
 ConfigKit let you use fast but readable YAML config file for your PHP application.
 
 YAML is clean, smart, easy. but in PHP you need to parse yaml config file for 
