@@ -3,7 +3,7 @@ ConfigKit
 
 [![Build Status](https://travis-ci.org/c9s/php-ConfigKit.png?branch=master)](https://travis-ci.org/c9s/php-ConfigKit)
 
-ConfigKit let you use fast but readable YAML config file for your PHP application.
+ConfigKit compiles your readable YAML config file to PHP files automatically.
 
 YAML is clean, smart, easy. but in PHP you need to parse yaml config file for 
 every request. Parsing YAML costs much. how to improve it ?
