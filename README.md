@@ -62,6 +62,13 @@ $config = ConfigCompiler::load('tests/ConfigKit/data/framework.yml');
 print_r( $config );
 ```
 
+To disable stats check (mtime checking):
+
+```php
+ConfigCompiler::$statCheck = false;
+$config = ConfigCompiler::load('tests/ConfigKit/data/framework.yml');
+```
+
 ### ConfigLoader
 
 You can manage multiple config files with ConfigLoader 
