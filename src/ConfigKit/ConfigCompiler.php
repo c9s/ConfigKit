@@ -41,19 +41,13 @@ class ConfigCompiler
 
     public static function compile($sourceFile,$compiledFile = null) { 
         if( ! $compiledFile ) {
-            $p = strrpos($sourceFile,'.yml');
-            if( $p === false ) {
-                $p = strrpos($sourceFile,'.json');
-            }
-            // if file extension is not supported, just append the .php suffix
-            if( $p === false ) {
-                $compiledFile = $sourceFile . '.php';
-            } else {
-                $compiledFile = substr($sourceFile,0,$p) . '.php';
-            }
+            // to .php
+            $compiledFile = futil_replace_extension($sourceFile, 'php');
         }
-        if( ! file_exists($compiledFile) 
-            || (file_exists($compiledFile) && filemtime($sourceFile) > filemtime($compiledFile))
+
+        if( ! file_exists($compiledFile)
+            || (file_exists($compiledFile) 
+                && futil_mtime_compare($sourceFile, $compiledFile) > 0 )
             ) {
             self::_compile_file($sourceFile,$compiledFile);
         }
