@@ -14,6 +14,12 @@ class ConfigCompiler
 {
     static $statCheck = true;
 
+    public static function format_supported($filename)
+    {
+        $extension = futil_get_extension($filename);
+        return in_array($extension, array('yml','yaml','json'));
+    }
+
     public static function _compile_file($sourceFile,$compiledFile) 
     {
         $content = file_get_contents($sourceFile);
