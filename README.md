@@ -36,7 +36,7 @@ The generated config cache is like below:
 
 ## Installation
 
-From composer:
+Composer:
 
 ```json
 {
@@ -47,8 +47,8 @@ From composer:
 ```
 
 ```sh
-    pear channel-discover pear.corneltek.com
-    pear install corneltek/ConfigKit
+$ pear channel-discover pear.corneltek.com
+$ pear install corneltek/ConfigKit
 ```
 
 ## Usage
