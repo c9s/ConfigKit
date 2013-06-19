@@ -2,7 +2,7 @@
     "name": "corneltek/configkit",
     "require": {
         "php": ">=5.3.0",
-        "corneltek/fileutil": "1.6.*"
+        "corneltek/fileutil": "1.*"
     },
     "require-dev": { 
         "corneltek/phpunit-testmore": "dev-master" 
