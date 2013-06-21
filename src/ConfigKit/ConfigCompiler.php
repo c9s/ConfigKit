@@ -6,7 +6,12 @@
  *  $config = ConfigCompiler::load('source_file.yml');
  */
 namespace ConfigKit;
+use Symfony\Component\Yaml\Yaml;
 use Exception;
+
+
+global $extensionSupport;
+$extensionSupport = extension_loaded('yaml');
 
 class ConfigFileException extends Exception {  }
 
@@ -24,7 +29,12 @@ class ConfigCompiler
     {
         $content = file_get_contents($sourceFile);
         if( strpos($content,'---') === 0 ) {
-            $config = \yaml_parse($content);
+            global $extensionSupport;
+            if ( $extensionSupport ) {
+                $config = \yaml_parse($content);
+            } else {
+                $config = Yaml::parse($sourceFile);
+            }
         } elseif(strpos($content,'{') === 0 ) {
             $config = \json_decode($content);
         } elseif(strpos($content,'<?php') === 0 ) {
