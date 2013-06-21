@@ -11,8 +11,8 @@ Requirement:
     - mbstring
     - apc
 Applications:
-  Core:
-  TestApp:
+  Core: ~
+  TestApp: ~
 View:
   Backend: twig
   Class: \Phifty\View

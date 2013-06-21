@@ -33,7 +33,7 @@ class ConfigCompiler
             if ( $extensionSupport ) {
                 $config = \yaml_parse($content);
             } else {
-                $config = Yaml::parse($sourceFile);
+                $config = Yaml::parse($content);
             }
         } elseif(strpos($content,'{') === 0 ) {
             $config = \json_decode($content);
