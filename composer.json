@@ -9,10 +9,6 @@
         "corneltek\/phpunit-testmore": "dev-master"
     },
     "autoload": {
-        "files": [
-            "src\/ConfigKit\/ConfigCompiler.php",
-            "src\/ConfigKit\/ConfigLoader.php"
-        ],
         "psr-0": {
             "ConfigKit": "src"
         }
