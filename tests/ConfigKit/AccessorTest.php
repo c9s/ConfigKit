@@ -29,8 +29,21 @@ class AccessorTest extends PHPUnit_Framework_TestCase
             $cnt++;
         }
         is(2, $cnt);
+    }
 
+    /**
+     * @depends testConfigConstructor
+     */
+    public function testArrayAccessInterface($config) {
+        $accessor = $config->lookup('Product.image');
+        ok( isset($accessor['width']) );
+        ok( isset($accessor['height']) );
 
+        ok( ! isset($accessor['foo']) );
+        ok( ! isset($accessor['bar']) );
+
+        ok( $accessor['height'] );
+        ok( $accessor['width'] );
     }
 
 
