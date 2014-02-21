@@ -12,7 +12,7 @@ class Accessor
 
     public $cache = array();
 
-    function __construct($config = array() )
+    public function __construct($config = array() )
     {
         $this->config = $config;
     }
