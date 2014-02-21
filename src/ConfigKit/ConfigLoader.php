@@ -15,6 +15,13 @@ class ConfigLoader
         return $this->stashes[ $section ] = ConfigCompiler::load($file);
     }
 
+    /**
+     * Merge config into one specific section
+     *
+     * @param string $section section key
+     * @param string $file    config file.
+     * @return array merged config array
+     */
     public function merge($section,$file)
     {
         if( isset($this->stashes[$section]) ) {
@@ -119,8 +126,14 @@ class ConfigLoader
         }
     }
 
-    public function isLoaded($sectionId) {
-        return isset($this->stashes[$sectionId]);
+    /**
+     * Check whether a config file is loaded into a section.
+     *
+     * @param string $section
+     * @return bool
+     */
+    public function isLoaded($section) {
+        return isset($this->stashes[$section]);
     }
 }
 
