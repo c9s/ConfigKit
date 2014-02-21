@@ -16,6 +16,23 @@ class AccessorTest extends PHPUnit_Framework_TestCase
         return $config;
     }
 
+    /**
+     * @depends testConfigConstructor
+     */
+    public function testIterator($config) {
+        $accessor = $config->lookup('Product.image');
+
+        $cnt = 0;
+        foreach( $accessor as $key => $value ) {
+            ok( $key , 'key' );
+            ok( $value, 'value' );
+            $cnt++;
+        }
+        is(2, $cnt);
+
+
+    }
+
 
     /**
      * @depends testConfigConstructor
