@@ -44,6 +44,10 @@ class AccessorTest extends PHPUnit_Framework_TestCase
      */
     public function testReturnAccessor($config)
     {
+        $accessor = $config->lookup('Product');
+        ok($accessor);
+        class_ok('ConfigKit\\Accessor', $accessor);
+
         $accessor = $config->lookup('Product.image');
         ok($accessor);
         class_ok('ConfigKit\\Accessor', $accessor);
