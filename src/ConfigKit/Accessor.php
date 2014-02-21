@@ -59,6 +59,42 @@ class Accessor
     {
         return $this->offsetGet($name);
     }
+
+
+    /**
+     * lookup config value
+     *
+     * @param string $key config key
+     * @return mixed
+     */
+    public function lookup( $key )
+    {
+        if ( isset($this->config[ $key ]) ) {
+            if ( is_array( $this->config[ $key ] ) ) {
+                return new Accessor($this->config[ $key ]);
+            }
+            return $this->config[ $key ];
+        }
+        if ( strchr( $key , '.' ) !== false ) {
+            $parts = explode( '.' , $key );
+            $ref = $this->config;
+            while ( $refKey = array_shift( $parts ) ) {
+                if ( is_array($ref) && isset($ref[ $refKey ]) ) {
+                    $ref = & $ref[ $refKey ];
+                    continue;
+                } else {
+                    return null;
+                }
+            }
+            if ( is_array($ref) ) {
+                return new Accessor($ref);
+            }
+            return $ref;
+        }
+        return null;
+    }
+
+
     
 }
 
