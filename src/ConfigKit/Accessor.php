@@ -34,7 +34,7 @@ class Accessor
     {
         if( isset($this->config[$name]) ) {
             if( is_array($this->config[$name]) ) {
-                return new Accessor($this->config[$name]);
+                return new self($this->config[$name]);
             }
             return $this->config[ $name ];
         }
@@ -71,7 +71,7 @@ class Accessor
     {
         if ( isset($this->config[ $key ]) ) {
             if ( is_array( $this->config[ $key ] ) ) {
-                return new Accessor($this->config[ $key ]);
+                return new self($this->config[ $key ]);
             }
             return $this->config[ $key ];
         }
@@ -87,14 +87,12 @@ class Accessor
                 }
             }
             if ( is_array($ref) ) {
-                return new Accessor($ref);
+                return new self($ref);
             }
             return $ref;
         }
         return null;
     }
-
-
     
 }
 
