@@ -3,15 +3,15 @@
 class AccessorTest extends PHPUnit_Framework_TestCase
 {
     public function testConfigConstructor() {
-        $config = new ConfigKit\Accessor([
-            'Product' => [
-                'image' => [
+        $config = new ConfigKit\Accessor(array(
+            'Product' => array(
+                'image' => array(
                     'width' => 100,
                     'height' => 200,
-                ],
+                ),
                 'zoom_image' => 1,
-            ],
-        ]);
+            ),
+        ));
         ok($config);
         return $config;
     }
