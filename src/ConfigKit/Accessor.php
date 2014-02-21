@@ -10,6 +10,8 @@ class Accessor
 
     public $config = array();
 
+    public $cache = array();
+
     function __construct($config = array() )
     {
         $this->config = $config;
@@ -69,11 +71,15 @@ class Accessor
      */
     public function lookup( $key )
     {
+        if ( isset($this->cache[$key]) ) {
+            return $this->cache[$key];
+        }
+
         if ( isset($this->config[ $key ]) ) {
             if ( is_array( $this->config[ $key ] ) ) {
-                return new self($this->config[ $key ]);
+                return $this->cache[$key] = new self($this->config[ $key ]);
             }
-            return $this->config[ $key ];
+            return $this->cache[$key] = $this->config[ $key ];
         }
         if ( strchr( $key , '.' ) !== false ) {
             $parts = explode( '.' , $key );
@@ -87,9 +93,9 @@ class Accessor
                 }
             }
             if ( is_array($ref) ) {
-                return new self($ref);
+                return $this->cache[$key] = new self($ref);
             }
-            return $ref;
+            return $this->cache[$key] = $ref;
         }
         return null;
     }

@@ -24,6 +24,10 @@ class AccessorTest extends PHPUnit_Framework_TestCase
     {
         is( 100, $config->lookup('Product.image.width') );
         is( 200, $config->lookup('Product.image.height') );
+
+        // with cache
+        is( 100, $config->lookup('Product.image.width') );
+        is( 200, $config->lookup('Product.image.height') );
     }
 
     /**
