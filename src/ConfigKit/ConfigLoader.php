@@ -94,15 +94,22 @@ class ConfigLoader
 
 
     /**
-     * get section stash, returns stash in pure php array.
+     * Get section stash, returns stash in pure php array.
      *
+     * @param string $section section name
      * @return array
      */
-    public function getSection($name)
+    public function getSection($section)
     {
-        if( isset( $this->stashes[$name] )) {
-            // It must be an array.
-            return $this->stashes[$name];
+        if( isset( $this->stashes[$section] )) {
+            return $this->stashes[$section];
+        }
+    }
+
+    public function getSectionAccessor($section) 
+    {
+        if( isset( $this->stashes[$section] )) {
+            return new Accessor($this->stashes[$section]);
         }
     }
 
