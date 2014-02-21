@@ -110,11 +110,13 @@ class ConfigLoader
      */
     public function get($section, $key = null)
     {
-        $config = new Accessor($this->getSection( $section ));
-        if ( $key ) {
-            return $config->lookup( $key );
+        if ( isset($this->stashes[$section]) ) {
+            $config = new Accessor($this->stashes[ $section ]);
+            if ( $key ) {
+                return $config->lookup( $key );
+            }
+            return $config;
         }
-        return $config;
     }
 
     public function isLoaded($sectionId) {
