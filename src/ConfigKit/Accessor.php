@@ -19,7 +19,7 @@ class Accessor
 
     public function getIterator() 
     {
-        return new ArrayIterator($this->config ?: array() );
+        return new ArrayIterator($this->config);
     }
     
     public function offsetSet($name,$value)
