@@ -5,15 +5,15 @@ ConfigKit
 
 ConfigKit compiles your readable YAML config file to PHP files automatically.
 
-YAML is clean, smart, easy. but in PHP you need to parse yaml config file for 
-every request. Parsing YAML costs much. how to improve it ?
+YAML format is clean, smart, easy. but in PHP, you have to parse yaml config file in 
+every request. Parsing YAML costs too much CPU time. How to improve it ?
 
-php-ConfigKit is a library for config files and is designed for performance, it
+php-ConfigKit is a library for config files and which is designed for performance, it
 parses yaml config files for the first time, then compiles the config files into php
-files, so these config files can be cached in PHP, and can also be
+files, so these config files can be cached in PHP, and it can also be
 in APC or any other cache backend system.
 
-ConfigKit is simple and fast, all you need to do is defining your config file in
+ConfigKit is simple and fast, all you have to do is defining your config file in
 YAML format, then use ConfigKit to load the config file.
 
 ConfigKit uses static methods because static methods are faster than object methods.
@@ -47,15 +47,11 @@ Composer:
 ```json
 {
     "require": { 
-        "corneltek/configkit": "1.3.*"
+        "corneltek/configkit": "~1.5"
     }
 }
 ```
 
-```sh
-$ pear channel-discover pear.corneltek.com
-$ pear install corneltek/ConfigKit
-```
 
 ## Usage
 
