@@ -1,7 +1,7 @@
 ConfigKit
 =============
 
-[![Build Status](https://travis-ci.org/c9s/php-ConfigKit.png?branch=master)](https://travis-ci.org/c9s/php-ConfigKit)
+[![Build Status](https://travis-ci.org/c9s/ConfigKit.png?branch=master)](https://travis-ci.org/c9s/ConfigKit)
 
 ConfigKit compiles your readable YAML config file to PHP files automatically.
 
