@@ -71,6 +71,41 @@ ConfigCompiler::$statCheck = false;
 $config = ConfigCompiler::load('tests/ConfigKit/data/framework.yml');
 ```
 
+
+If you want to compile the config file manually, you may call the `compile` static function to do that:
+
+```php
+$compiledFile = ConfigCompiler::compile('config/framework.yml');
+```
+
+You may also specify the compiled filename in the arguments:
+
+```php
+$compiledFile = ConfigCompiler::compile('config/framework.yml', 'config/framework.php');
+```
+
+You can also override some config values during the compilation, by using the `override_compile` function:
+
+```php
+$compiledFile = ConfigCompiler::override_compile('config/framework.yml', array( 
+    'something_should_not_be_in_config_file' => 123123123,
+    'something_should_not_be_in_git' => 123123123,
+    'something_generated_in_the_runtime' => random(),
+));
+```
+
+To test if a compiled file needs to be updated (re-compile):
+
+```php
+if ( ConfigCompiler::test('config/framework.yml','config/framework.php')) ) {
+    ConfigCompiler::compile(....);
+} else {
+    // already up to date.
+}
+```
+
+
+
 ### ConfigLoader
 
 You can manage multiple config files with ConfigLoader 
