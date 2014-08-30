@@ -72,19 +72,55 @@ class ConfigCompiler
         }
     }
 
+
+    /**
+     * Test if a the source file is updated, and the compiled cache file needs 
+     * to be updated.
+     *
+     * @param path $sourceFile 
+     * @param path $compiledFile
+     *
+     * @return bool true means compilation is needed. false means we can ignore it.
+     */
+    public static function test($sourceFile, $compiledFile) {
+        if (file_exists($compiledFile)) {
+            return \futil_mtime_compare($sourceFile, $compiledFile) > 0;
+        }
+        return true;
+    }
+
+    /**
+     * Compile the source file to cache file.
+     *
+     * @param path $sourceFile 
+     * @param path $compiledFile
+     *
+     * @return path the compiled file path
+     */
     public static function compile($sourceFile, $compiledFile = null) { 
         if ( ! $compiledFile ) {
-            // to .php
             $compiledFile = \futil_replace_extension($sourceFile, 'php');
         }
-        if( ! file_exists($compiledFile)
-            || (file_exists($compiledFile) 
-                && \futil_mtime_compare($sourceFile, $compiledFile) > 0 )
-            ) {
+        if (self::test($sourceFile, $compiledFile)) {
             self::_compile_file($sourceFile,$compiledFile);
         }
         return $compiledFile;
     }
+
+
+    /**
+     * override the original config and compile to cache.
+     */
+    public static function override_compile($sourceFile, $overrideConfig, $compiledFile = null) {
+        if ( ! $compiledFile ) {
+            $compiledFile = \futil_replace_extension($sourceFile, 'php');
+        }
+        if (self::test($sourceFile, $compiledFile)) {
+            self::_compile_file($sourceFile,$compiledFile, $overrideConfig);
+        }
+        return $compiledFile;
+    }
+
 
     public static function load($sourceFile,$compiledFile = null) 
     {
