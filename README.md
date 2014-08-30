@@ -121,5 +121,21 @@ To get config stash
 ```php
 $paths = $loader->get('framework','web.paths');
 $templates = $loader->get('framework','web.templates');
+foreach( $paths as $path ) {
+    echo $path, "\n";
+}
 ```
+
+To write all config stash into one cache file:
+
+```php
+$loader->writeStashes('all.php');
+```
+
+To load all config stash back:
+
+```php
+$loader->loadStashes('all.php');
+```
+
 
