@@ -26,7 +26,7 @@ class ConfigCompiler
         return in_array($extension, array('yml','yaml','json'));
     }
 
-    public static function _compile_file($sourceFile,$compiledFile) 
+    public static function _compile_file($sourceFile,$compiledFile, $overrideConfig = null)
     {
         $content = file_get_contents($sourceFile);
         if( strpos($content,'---') === 0 ) {
@@ -42,6 +42,12 @@ class ConfigCompiler
             $config = require $sourceFile;
         } else {
             throw new ConfigFileException('Unknown file format.');
+        }
+        if ($overrideConfig) {
+            if (! is_array($overrideConfig)) {
+                throw new InvalidArgumentException("overrideConfig must be an array.");
+            }
+            $config = array_merge($config, $overrideConfig);
         }
         self::write($compiledFile,$config);
 
@@ -66,7 +72,7 @@ class ConfigCompiler
         }
     }
 
-    public static function compile($sourceFile,$compiledFile = null) { 
+    public static function compile($sourceFile, $compiledFile = null) { 
         if ( ! $compiledFile ) {
             // to .php
             $compiledFile = \futil_replace_extension($sourceFile, 'php');
