@@ -42,7 +42,7 @@ class ConfigCompiler
         } else {
             throw new ConfigFileException('Unknown file format.');
         }
-        self::write_config($compiledFile,$config);
+        self::write($compiledFile,$config);
 
         // inline apc cache
         if (extension_loaded('apc')) {
@@ -51,7 +51,7 @@ class ConfigCompiler
         return $config;
     }
 
-    public static function write_config($compiledFile, $config)
+    public static function write($compiledFile, $config)
     {
         if ( file_put_contents( $compiledFile , '<?php return ' . var_export($config,true) . ';' ) === false ) {
             throw new ConfigFileException("Can not write config file.");
