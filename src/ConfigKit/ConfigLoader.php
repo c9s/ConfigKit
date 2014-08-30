@@ -46,7 +46,7 @@ class ConfigLoader
             throw new Exception("$section section is not loaded.");
         }
         $config = $this->stashes[$section];
-        return ConfigCompiler::write_config($file,$config);
+        return ConfigCompiler::write($file,$config);
     }
 
 
@@ -57,7 +57,7 @@ class ConfigLoader
      */
     public function writeStashes($file)
     {
-        return ConfigCompiler::write_config($file,$this->stashes);
+        return ConfigCompiler::write($file,$this->stashes);
     }
 
 

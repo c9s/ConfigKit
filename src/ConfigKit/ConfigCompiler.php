@@ -7,6 +7,7 @@
  */
 namespace ConfigKit;
 use Symfony\Component\Yaml\Yaml;
+use Symfony\Component\Yaml\Dumper;
 use Exception;
 
 
@@ -49,6 +50,13 @@ class ConfigCompiler
             apc_store($sourceFile . filemtime($sourceFile) , $config);
         }
         return $config;
+    }
+
+    /**
+     * Write config array into the YAML file. using Symfony YAML component.
+     */
+    public static function write_yaml($yamlFile, $config) {
+        return file_put_contents($yamlFile, Yaml::dump($config, $inline = false, $exceptionOnInvalidType = true));
     }
 
     public static function write($compiledFile, $config)
