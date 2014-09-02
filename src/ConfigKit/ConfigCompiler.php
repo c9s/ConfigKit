@@ -62,7 +62,7 @@ class ConfigCompiler
      * Write config array into the YAML file. using Symfony YAML component.
      */
     public static function write_yaml($yamlFile, $config) {
-        return file_put_contents($yamlFile, Yaml::dump($config, $inline = false, $exceptionOnInvalidType = true));
+        return file_put_contents($yamlFile, "---\n" . Yaml::dump($config, $inline = true, $exceptionOnInvalidType = true));
     }
 
     public static function write($compiledFile, $config)
