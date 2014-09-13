@@ -89,6 +89,11 @@ class ConfigCompiler
         return true;
     }
 
+    public static function compiled_filename($sourceFile) {
+        return futil_replace_extension($sourceFile, 'php');
+    }
+
+
     /**
      * Compile the source file to cache file.
      *
@@ -99,7 +104,7 @@ class ConfigCompiler
      */
     public static function compile($sourceFile, $compiledFile = null) { 
         if ( ! $compiledFile ) {
-            $compiledFile = \futil_replace_extension($sourceFile, 'php');
+            $compiledFile = self::compiled_filename($sourceFile);
         }
         if (self::test($sourceFile, $compiledFile)) {
             self::_compile_file($sourceFile,$compiledFile);
