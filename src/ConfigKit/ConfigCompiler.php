@@ -26,23 +26,27 @@ class ConfigCompiler
         return in_array($extension, array('yml','yaml','json'));
     }
 
-    public static function _compile_file($sourceFile,$compiledFile, $overrideConfig = null)
-    {
+    public static function parse($sourceFile) {
         $content = file_get_contents($sourceFile);
-        if( strpos($content,'---') === 0 ) {
+        if (strpos($content,'---') === 0) {
             global $extensionSupport;
             if ( $extensionSupport ) {
-                $config = \yaml_parse($content);
+                return \yaml_parse($content);
             } else {
-                $config = Yaml::parse($content);
+                return Yaml::parse($content);
             }
-        } elseif(strpos($content,'{') === 0 ) {
-            $config = \json_decode($content);
-        } elseif(strpos($content,'<?php') === 0 ) {
-            $config = require $sourceFile;
-        } else {
-            throw new ConfigFileException('Unknown file format.');
+        } elseif (strpos($content,'{') === 0) {
+            return \json_decode($content);
+        } elseif (strpos($content,'<?php') === 0 ) {
+            return require $sourceFile;
         }
+        throw new ConfigFileException('Unknown file format.');
+    }
+
+    public static function _compile_file($sourceFile,$compiledFile, $overrideConfig = null)
+    {
+        $config = self::parse($sourceFile);
+
         if ($overrideConfig) {
             if (! is_array($overrideConfig)) {
                 throw new InvalidArgumentException("overrideConfig must be an array.");
