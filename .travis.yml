@@ -9,12 +9,19 @@ before_script:
   - sh -c "cd yaml-1.1.0 && phpize && ./configure > /dev/null && make > /dev/null && sudo make install && cd .."
   - rm -rf yaml-1.1.0 yaml-1.1.0.tgz
   - echo "extension=yaml.so" >> `php --ini | grep "Loaded Configuration" | sed -e "s|.*:\s*||"`
-  - composer install --dev
+  - composer self-update
+  - composer require satooshi/php-coveralls:dev-master --no-update --dev
+  - composer install --dev --prefer-source
 
-script: phpunit
-notifications:
-  webhooks:
-    - http://wireroom.extremedev.org/=/travis-ci/Hall
+script:
+  - phpunit -c phpunit.xml.dist
+
+#  notifications:
+#    webhooks:
+#      - http://wireroom.extremedev.org/=/travis-ci/Hall
+after_script:
+  - php vendor/bin/coveralls -v
+
 cache:
   apt: true
   directories:
