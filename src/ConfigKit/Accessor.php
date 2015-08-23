@@ -12,7 +12,7 @@ class Accessor
 
     public $cache = array();
 
-    public function __construct($config = array() )
+    public function __construct($config = array())
     {
         $this->config = $config;
     }
@@ -34,8 +34,8 @@ class Accessor
     
     public function offsetGet($name)
     {
-        if( isset($this->config[$name]) ) {
-            if( is_array($this->config[$name]) ) {
+        if (isset($this->config[$name])) {
+            if (is_array($this->config[$name])) {
                 return new self($this->config[$name]);
             }
             return $this->config[ $name ];
