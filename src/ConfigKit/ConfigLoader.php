@@ -1,7 +1,7 @@
 <?php
+
 namespace ConfigKit;
-use ConfigKit\ConfigCompiler;
-use ConfigKit\Accessor;
+
 use CodeGen\UserClass;
 use Doctrine\Common\Inflector\Inflector;
 
@@ -11,31 +11,33 @@ class ConfigLoader
 
     public $files = array();
 
-    public function load($section,$file)
+    public function load($section, $file)
     {
         // register to files
         $this->files[ $section ] = array($file);
+
         return $this->stashes[ $section ] = ConfigCompiler::load($file);
     }
 
     /**
-     * Merge config into one specific section
+     * Merge config into one specific section.
      *
      * @param string $section section key
      * @param string $file    config file.
+     *
      * @return array merged config array
      */
-    public function merge($section,$file)
+    public function merge($section, $file)
     {
-        if( isset($this->stashes[$section]) ) {
+        if (isset($this->stashes[$section])) {
             $this->files[ $section ][] = $file;
             $config = ConfigCompiler::load($file);
-            return $this->stashes[$section] = array_merge( $this->stashes[$section] , $config );
+
+            return $this->stashes[$section] = array_merge($this->stashes[$section], $config);
         } else {
-            return $this->load($section,$file);
+            return $this->load($section, $file);
         }
     }
-
 
     /**
      * Write section config to a file.
@@ -43,15 +45,15 @@ class ConfigLoader
      * @param string $section
      * @param string $file
      */
-    public function writeSection($section,$file)
+    public function writeSection($section, $file)
     {
-        if( ! isset($this->stashes[$section]) ) {
+        if (!isset($this->stashes[$section])) {
             throw new Exception("$section section is not loaded.");
         }
         $config = $this->stashes[$section];
-        return ConfigCompiler::write($file,$config);
-    }
 
+        return ConfigCompiler::write($file, $config);
+    }
 
     /**
      * Write config stashes to file.
@@ -60,9 +62,8 @@ class ConfigLoader
      */
     public function writeStashes($file)
     {
-        return ConfigCompiler::write($file,$this->stashes);
+        return ConfigCompiler::write($file, $this->stashes);
     }
-
 
     /**
      * Load stashes from config file directly.
@@ -80,7 +81,7 @@ class ConfigLoader
     }
 
     /**
-     * Allow more useful getter
+     * Allow more useful getter.
      */
     public function __get($name)
     {
@@ -90,35 +91,34 @@ class ConfigLoader
         }
     }
 
-    public function __isset($name) 
+    public function __isset($name)
     {
         return isset($this->stashes[$name]);
     }
-
 
     /**
      * Get section stash, returns stash in pure php array.
      *
      * @param string $section section name
+     *
      * @return array
      */
     public function getSection($section)
     {
-        if( isset( $this->stashes[$section] )) {
+        if (isset($this->stashes[$section])) {
             return $this->stashes[$section];
         }
     }
 
-    public function getSectionAccessor($section) 
+    public function getSectionAccessor($section)
     {
-        if( isset( $this->stashes[$section] )) {
+        if (isset($this->stashes[$section])) {
             return new Accessor($this->stashes[$section]);
         }
     }
 
-
     /**
-     * get config from the "config key" like:
+     * get config from the "config key" like:.
      *
      *   mail.user
      *   mail.pass
@@ -127,11 +127,12 @@ class ConfigLoader
      */
     public function get($section, $key = null)
     {
-        if ( isset($this->stashes[$section]) ) {
+        if (isset($this->stashes[$section])) {
             $config = new Accessor($this->stashes[ $section ]);
-            if ( $key ) {
-                return $config->lookup( $key );
+            if ($key) {
+                return $config->lookup($key);
             }
+
             return $config;
         }
     }
@@ -140,12 +141,13 @@ class ConfigLoader
      * Check whether a config file is loaded into a section.
      *
      * @param string $section
+     *
      * @return bool
      */
-    public function isLoaded($section) {
+    public function isLoaded($section)
+    {
         return isset($this->stashes[$section]);
     }
-
 
     public function generateAppClass($className)
     {
@@ -161,18 +163,12 @@ class ConfigLoader
         foreach ($this->stashes as $sectionName => $stash) {
             $appClass->addMethod(
                 'public',
-                'get' . Inflector::classify($sectionName) . 'Section',
+                'get'.Inflector::classify($sectionName).'Section',
                 [],
-                ["return new Accessor(\$this->stashes[" . var_export($sectionName, true) . "]);"]
+                ['return new Accessor($this->stashes['.var_export($sectionName, true).']);']
             );
         }
-        return $appClass; 
+
+        return $appClass;
     }
-
 }
-
-
-
-
-
-
