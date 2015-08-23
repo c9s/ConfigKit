@@ -1,6 +1,9 @@
 <?php
 namespace ConfigKit;
 use ConfigKit\ConfigCompiler;
+use ConfigKit\Accessor;
+use CodeGen\UserClass;
+use Doctrine\Common\Inflector\Inflector;
 
 class ConfigLoader
 {
@@ -81,7 +84,7 @@ class ConfigLoader
      */
     public function __get($name)
     {
-        if( isset( $this->stashes[$name] )) {
+        if (isset($this->stashes[$name])) {
             // It must be an array.
             return new Accessor($this->stashes[$name]);
         }
@@ -142,7 +145,34 @@ class ConfigLoader
     public function isLoaded($section) {
         return isset($this->stashes[$section]);
     }
+
+
+    public function generateAppClass($className)
+    {
+        $appClass = new UserClass($className);
+        $appClass->useClass('ConfigKit\\Accessor');
+        $appClass->useClass('ConfigKit\\ConfigLoader');
+        $appClass->extendClass('ConfigLoader');
+
+        // override the parent stashes property
+        $appClass->addPublicProperty('stashes', $this->stashes);
+        $appClass->addPublicProperty('files', $this->files);
+
+        foreach ($this->stashes as $sectionName => $stash) {
+            $appClass->addMethod(
+                'public',
+                'get' . Inflector::classify($sectionName) . 'Section',
+                [],
+                ["return new Accessor(\$this->stashes[" . var_export($sectionName, true) . "]);"]
+            );
+        }
+        return $appClass; 
+    }
+
 }
+
+
+
 
 
 
