@@ -1,5 +1,14 @@
 {
     "name": "corneltek/configkit",
+    "keywords": [
+        "config",
+        "yaml",
+        "cache",
+        "accessor"
+    ],
+    "description": "Fast config toolkit, which provides super lightweight config accessor and loader.",
+    "license": "MIT",
+    "support": { "issues": "https://github.com/c9s/ConfigKit/issues" },
     "require": {
         "php": ">=5.3.0",
         "symfony/yaml": "^2.4",
