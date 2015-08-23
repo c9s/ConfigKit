@@ -164,8 +164,8 @@ class ConfigLoader
             $appClass->addMethod(
                 'public',
                 'get'.Inflector::classify($sectionName).'Section',
-                [],
-                ['return new Accessor($this->stashes['.var_export($sectionName, true).']);']
+                array(),
+                array('return new Accessor($this->stashes['.var_export($sectionName, true).']);')
             );
         }
 
