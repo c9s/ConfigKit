@@ -2,15 +2,16 @@
     "name": "corneltek/configkit",
     "require": {
         "php": ">=5.3.0",
-        "symfony/yaml": "~2.3",
-        "corneltek/fileutil": "1.*"
+        "symfony/yaml": "^2.4",
+        "corneltek/fileutil": "^1",
+        "corneltek/codegen": "^2"
     },
     "require-dev": {
         "corneltek/phpunit-testmore": "dev-master"
     },
     "autoload": {
-        "psr-0": {
-            "ConfigKit": "src"
+        "psr-4": {
+            "ConfigKit\\": "src/ConfigKit/"
         }
     },
     "version": "1.5.5"
