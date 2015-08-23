@@ -138,4 +138,18 @@ To load all config stash back:
 $loader->loadStashes('all.php');
 ```
 
+### Generate AppConfigLoader class
+
+
+```php
+$loader = new ConfigKit\ConfigLoader;
+$loader->load('database','tests/data/database.yml');
+$loader->load('framework','tests/data/framework.yml');
+$appClass = $loader->generateAppClass('MyApp\\AppConfigLoader');
+$path = $appClass->generatePsr4ClassUnder('tests');
+require_once($path); 
+$appConfigLoader = new \MyApp\AppConfigLoader;
+```
+
+
 
