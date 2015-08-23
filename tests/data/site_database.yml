@@ -1,0 +1,6 @@
+---
+data_sources:
+  default:
+    dsn: 'pgsql:host=localhost;dbname=testing'
+    user: testing
+    pass: testing

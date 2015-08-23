@@ -1,0 +1,16 @@
+---
+bootstrap:
+  - 'main.php'
+schema:
+  auto_id: true
+  loader: phifty/src/Phifty/SchemaLoader.php
+  base_model: '\Phifty\Model'
+  base_collection: '\Phifty\Collection'
+seeds:
+  - InputSystem\Seed
+  - User\Seed
+data_sources:
+  default:
+    dsn: 'pgsql:host=localhost;dbname=testing'
+    user: root
+    pass: 123123
