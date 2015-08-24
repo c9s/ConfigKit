@@ -18,6 +18,8 @@ class ConfigLoaderTest extends PHPUnit_Framework_TestCase
 
         require_once($path); 
 
+        // echo file_get_contents($path);
+
         $appConfigLoader = new \MyApp\AppConfigLoader;
 
         $sectionConfig = $appConfigLoader->getDatabaseSection();
@@ -26,6 +28,9 @@ class ConfigLoaderTest extends PHPUnit_Framework_TestCase
         $sectionConfig = $appConfigLoader->getFrameworkSection();
         $this->assertNotEmpty($sectionConfig);
 
+
+        $this->assertEquals('Phifty', $appConfigLoader->get('framework', 'ApplicationName'));
+        $this->assertEquals('9fc933c0-70f9-11e1-9095-3c07541dfc0c', $appConfigLoader->get('framework', 'ApplicationUUID'));
 
         unlink($path);
     }

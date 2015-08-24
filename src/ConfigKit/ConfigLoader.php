@@ -11,6 +11,11 @@ class ConfigLoader
 
     public $files = array();
 
+    /**
+     * @var array cached config
+     */
+    protected $cacheEntries = array();
+
     public function load($section, $file)
     {
         // register to files
@@ -123,18 +128,25 @@ class ConfigLoader
      *   mail.user
      *   mail.pass
      *
-     * @return array
+     * @param string $section
+     * @param string $key
+     * @return Array|Accessor
      */
     public function get($section, $key = null)
     {
-        if (isset($this->stashes[$section])) {
-            $config = new Accessor($this->stashes[ $section ]);
-            if ($key) {
-                return $config->lookup($key);
-            }
-
-            return $config;
+        if (!isset($this->stashes[$section])) {
+            return;
         }
+
+        if ($key && isset($this->cacheEntries[$section][$key])) {
+            return $this->cacheEntries[$section][$key];
+        }
+
+        $config = new Accessor($this->stashes[$section]);
+        if ($key) {
+            return $config->lookup($key);
+        }
+        return $config;
     }
 
     /**
@@ -149,6 +161,42 @@ class ConfigLoader
         return isset($this->stashes[$section]);
     }
 
+
+    protected function deflateCacheKeys(array $config, $maxLevel = 1, $level = 0, $parentKey = null)
+    {
+        $cacheEntries = [];
+        foreach ($config as $key => $value) {
+
+            // skip indexed keys
+            if (is_numeric($key)) {
+                continue;
+            }
+
+
+            if ($parentKey) {
+                $deflateKey = $parentKey . '.' . $key;
+            } else {
+                $deflateKey = $key;
+            }
+
+            if (is_array($value)) {
+                if ($level > $maxLevel) {
+                    continue;
+                }
+                $subConfig = $this->deflateCacheKeys($value, $maxLevel, $level+1, $parentKey);
+                foreach ($subConfig as $subkey => $subval) {
+                    $k = $deflateKey . '.' . $subkey;
+                    $cacheEntries[ $k ] = $subval;
+                }
+            } else {
+                $cacheEntries[$deflateKey] = $value;
+            }
+        }
+        return $cacheEntries;
+    }
+
+
+
     public function generateAppClass($className)
     {
         $appClass = new UserClass($className);
@@ -160,7 +208,11 @@ class ConfigLoader
         $appClass->addPublicProperty('stashes', $this->stashes);
         $appClass->addPublicProperty('files', $this->files);
 
+        $cacheEntries = array();
         foreach ($this->stashes as $sectionName => $stash) {
+            $cacheEntries[$sectionName] = $this->deflateCacheKeys($stash);
+
+            // $cache[ $sectionName ];
             $appClass->addMethod(
                 'public',
                 'get'.Inflector::classify($sectionName).'Section',
@@ -168,6 +220,8 @@ class ConfigLoader
                 array('return new Accessor($this->stashes['.var_export($sectionName, true).']);')
             );
         }
+
+        $appClass->addProtectedProperty('cacheEntries', $cacheEntries);
 
         return $appClass;
     }
