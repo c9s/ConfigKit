@@ -164,7 +164,7 @@ class ConfigLoader
 
     protected function deflateCacheKeys(array $config, $maxLevel = 1, $level = 0, $parentKey = null)
     {
-        $cacheEntries = [];
+        $cacheEntries = array();
         foreach ($config as $key => $value) {
 
             // skip indexed keys
