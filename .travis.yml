@@ -11,17 +11,13 @@ before_script:
 - rm -rf yaml-1.1.0 yaml-1.1.0.tgz
 - echo "extension=yaml.so" >> `php --ini | grep "Loaded Configuration" | sed -e "s|.*:\s*||"`
 - composer self-update
-- composer require satooshi/php-coveralls:dev-master --no-update --dev
+- composer require "satooshi/php-coveralls" "^1" --no-update --dev
 - composer install
 script:
   - phpunit -c phpunit.xml.dist
-#  notifications:
-#    webhooks:
-#      - http://wireroom.extremedev.org/=/travis-ci/Hall
 after_success:
   - php vendor/bin/coveralls -v
 cache:
   apt: true
   directories:
   - vendor
-  - composer.lock
