@@ -68,7 +68,7 @@ class ConfigCompiler
     public static function write_yaml($yamlFile, $config) {
         $yaml = '';
         if (extension_loaded('yaml')) {
-            $yaml = yaml_emit($config);
+            $yaml = yaml_emit($config, YAML_UTF8_ENCODING);
         } else {
             $yaml = "---\n" . Yaml::dump($config, $inline = true, $exceptionOnInvalidType = true);
         }
