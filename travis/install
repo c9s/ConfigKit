@@ -1,0 +1,21 @@
+#!/bin/bash
+function ext_install()
+{
+    pkg=$1
+    version=$2
+    dir=$pkg-$version
+    tgz=$pkg-$version.tgz
+
+    curl -L -o $tgz http://pecl.php.net/get/$tgz
+    tar -xzf $tgz
+    (cd $dir && phpize && ./configure > /dev/null && make > /dev/null && sudo make install)
+    rm -rf $dir $tgz
+}
+if [[ -n "$TRAVIS_PHP_VERSION" ]] ; then
+    if [[ ${TRAVIS_PHP_VERSION:0:1} == "5" ]] ; then
+        ext_install yaml "1.3.0b1"
+    fi
+    if [[ ${TRAVIS_PHP_VERSION:0:1} == "7" ]] ; then
+        ext_install yaml "2.0.0RC8"
+    fi
+fi
