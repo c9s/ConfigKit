@@ -4,13 +4,11 @@ php:
 - 5.4
 - 5.5
 - 5.6
+- 7.0
 before_script:
 - phpenv rehash
-- curl -o yaml-1.1.0.tgz http://pecl.php.net/get/yaml-1.1.0.tgz
-- tar -xzf yaml-1.1.0.tgz
-- sh -c "cd yaml-1.1.0 && phpize && ./configure > /dev/null && make > /dev/null && sudo make install && cd .."
-- rm -rf yaml-1.1.0 yaml-1.1.0.tgz
-- echo "extension=yaml.so" >> `php --ini | grep "Loaded Configuration" | sed -e "s|.*:\s*||"`
+- travis/install
+- echo "extension = yaml.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
 - composer self-update
 - composer require "satooshi/php-coveralls" "^1" --no-update --dev
 - composer install
