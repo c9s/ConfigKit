@@ -24,6 +24,5 @@
         "psr-4": {
             "ConfigKit\\": "src/ConfigKit/"
         }
-    },
-    "version": "1.6.0"
+    }
 }
