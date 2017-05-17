@@ -1,6 +1,6 @@
 <?php
 
-class ConfigLoaderTest extends PHPUnit_Framework_TestCase
+class ConfigLoaderTest extends \PHPUnit\Framework\TestCase
 {
 
 

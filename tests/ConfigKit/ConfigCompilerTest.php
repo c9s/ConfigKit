@@ -1,7 +1,7 @@
 <?php
 use ConfigKit\ConfigCompiler;
 
-class ConfigCompilerTest extends PHPUnit_Framework_TestCase
+class ConfigCompilerTest extends \PHPUnit\Framework\TestCase
 {
     public function testCompile()
     {

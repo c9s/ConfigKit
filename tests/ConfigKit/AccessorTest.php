@@ -1,6 +1,6 @@
 <?php
 
-class AccessorTest extends PHPUnit_Framework_TestCase
+class AccessorTest extends \PHPUnit\Framework\TestCase
 {
     public function testConfigConstructor() {
         $config = new ConfigKit\Accessor(array(
