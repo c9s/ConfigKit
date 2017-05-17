@@ -1,9 +1,11 @@
 <?php
 
+namespace ConfigKit;
+
 class AccessorTest extends \PHPUnit\Framework\TestCase
 {
     public function testConfigConstructor() {
-        $config = new ConfigKit\Accessor(array(
+        $config = new Accessor(array(
             'Product' => array(
                 'image' => array(
                     'width' => 100,
@@ -76,11 +78,11 @@ class AccessorTest extends \PHPUnit\Framework\TestCase
     {
         $accessor = $config->lookup('Product');
         ok($accessor);
-        class_ok('ConfigKit\\Accessor', $accessor);
+        class_ok(Accessor::class, $accessor);
 
         $accessor = $config->lookup('Product.image');
         ok($accessor);
-        class_ok('ConfigKit\\Accessor', $accessor);
+        class_ok(Accessor::class, $accessor);
         is( 100,  $accessor['width'] );
         is( 200,  $accessor['height'] );
         is( 100,  $accessor->width );

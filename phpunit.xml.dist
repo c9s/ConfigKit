@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<phpunit bootstrap="tests/bootstrap.php"
+<phpunit bootstrap="vendor/autoload.php"
          backupGlobals="false"
          colors="true"
          convertErrorsToExceptions="true"
@@ -10,7 +10,7 @@
          verbose="true">
   <testsuites>
         <testsuite name="ConfigKit">
-            <directory suffix="Test.php">tests</directory>
+            <directory suffix="Test.php">src</directory>
         </testsuite>
   </testsuites>
 

@@ -6,6 +6,7 @@
  *  $config = ConfigCompiler::load('source_file.yml');
  */
 namespace ConfigKit;
+
 use Symfony\Component\Yaml\Yaml;
 use Symfony\Component\Yaml\Dumper;
 use Exception;

@@ -1,12 +1,13 @@
 <?php
 
+namespace ConfigKit;
+
 class ConfigLoaderTest extends \PHPUnit\Framework\TestCase
 {
 
-
     public function testCodeGen()
     {
-        $loader = new ConfigKit\ConfigLoader;
+        $loader = new ConfigLoader;
         $loader->load('database','tests/data/database.yml');
         $loader->load('framework','tests/data/framework.yml');
         $appClass = $loader->generateAppClass('MyApp\\AppConfigLoader');
@@ -37,7 +38,7 @@ class ConfigLoaderTest extends \PHPUnit\Framework\TestCase
 
     public function testConfigLoader()
     {
-        $loader = new ConfigKit\ConfigLoader;
+        $loader = new ConfigLoader;
         $loader->load('database','tests/data/database.yml');
         $loader->load('framework','tests/data/framework.yml');
 

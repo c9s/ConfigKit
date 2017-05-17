@@ -1,5 +1,6 @@
 <?php
-use ConfigKit\ConfigCompiler;
+
+namespace ConfigKit;
 
 class ConfigCompilerTest extends \PHPUnit\Framework\TestCase
 {
