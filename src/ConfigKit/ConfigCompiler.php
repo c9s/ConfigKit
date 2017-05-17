@@ -26,21 +26,20 @@ class ConfigCompiler
         return in_array($extension, array('yml','yaml','json'));
     }
 
-    public static function parse($sourceFile) {
+    public static function parse($sourceFile)
+    {
         $content = file_get_contents($sourceFile);
-        if (strpos($content,'---') === 0) {
-            global $extensionSupport;
-            if ( $extensionSupport ) {
+        if ($content[0] === '{') {
+            return \json_decode($content);
+        } else if (strpos($content,'<?php') === 0 ) {
+            return require $sourceFile;
+        } else {
+            if  (extension_loaded('yaml')) {
                 return \yaml_parse($content);
             } else {
                 return Yaml::parse($content);
             }
-        } elseif (strpos($content,'{') === 0) {
-            return \json_decode($content);
-        } elseif (strpos($content,'<?php') === 0 ) {
-            return require $sourceFile;
         }
-        throw new ConfigFileException('Unknown file format.');
     }
 
     public static function _compile_file($sourceFile,$compiledFile, $overrideConfig = null)
