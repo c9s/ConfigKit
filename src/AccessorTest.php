@@ -4,7 +4,8 @@ namespace ConfigKit;
 
 class AccessorTest extends \PHPUnit\Framework\TestCase
 {
-    public function testConfigConstructor() {
+    public function testConfigConstructor()
+    {
         $config = new Accessor(array(
             'Product' => array(
                 'image' => array(
@@ -21,13 +22,14 @@ class AccessorTest extends \PHPUnit\Framework\TestCase
     /**
      * @depends testConfigConstructor
      */
-    public function testIterator($config) {
+    public function testIterator($config)
+    {
         $accessor = $config->lookup('Product.image');
 
         $cnt = 0;
-        foreach( $accessor as $key => $value ) {
-            ok( $key , 'key' );
-            ok( $value, 'value' );
+        foreach ($accessor as $key => $value) {
+            ok($key, 'key');
+            ok($value, 'value');
             $cnt++;
         }
         is(2, $cnt);
@@ -36,16 +38,17 @@ class AccessorTest extends \PHPUnit\Framework\TestCase
     /**
      * @depends testConfigConstructor
      */
-    public function testArrayAccessInterface($config) {
+    public function testArrayAccessInterface($config)
+    {
         $accessor = $config->lookup('Product.image');
-        ok( isset($accessor['width']) );
-        ok( isset($accessor['height']) );
+        ok(isset($accessor['width']));
+        ok(isset($accessor['height']));
 
-        ok( ! isset($accessor['foo']) );
-        ok( ! isset($accessor['bar']) );
+        ok(! isset($accessor['foo']));
+        ok(! isset($accessor['bar']));
 
-        ok( $accessor['height'] );
-        ok( $accessor['width'] );
+        ok($accessor['height']);
+        ok($accessor['width']);
     }
 
 
@@ -54,12 +57,12 @@ class AccessorTest extends \PHPUnit\Framework\TestCase
      */
     public function testConfigLookupForScalarValue($config)
     {
-        is( 100, $config->lookup('Product.image.width') );
-        is( 200, $config->lookup('Product.image.height') );
+        is(100, $config->lookup('Product.image.width'));
+        is(200, $config->lookup('Product.image.height'));
 
         // with cache
-        is( 100, $config->lookup('Product.image.width') );
-        is( 200, $config->lookup('Product.image.height') );
+        is(100, $config->lookup('Product.image.width'));
+        is(200, $config->lookup('Product.image.height'));
     }
 
     /**
@@ -67,8 +70,8 @@ class AccessorTest extends \PHPUnit\Framework\TestCase
      */
     public function testConfigLookupForNonArrayParent($config)
     {
-        is( 1, $config->lookup('Product.zoom_image') );
-        is( null, $config->lookup('Product.zoom_image.width') );
+        is(1, $config->lookup('Product.zoom_image'));
+        is(null, $config->lookup('Product.zoom_image.width'));
     }
 
     /**
@@ -83,10 +86,9 @@ class AccessorTest extends \PHPUnit\Framework\TestCase
         $accessor = $config->lookup('Product.image');
         ok($accessor);
         class_ok(Accessor::class, $accessor);
-        is( 100,  $accessor['width'] );
-        is( 200,  $accessor['height'] );
-        is( 100,  $accessor->width );
-        is( 200,  $accessor->height );
+        is(100, $accessor['width']);
+        is(200, $accessor['height']);
+        is(100, $accessor->width);
+        is(200, $accessor->height);
     }
 }
-

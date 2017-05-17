@@ -1,13 +1,12 @@
 <?php
 namespace ConfigKit;
+
 use ArrayAccess;
 use ArrayIterator;
 use IteratorAggregate;
 
-class Accessor
-    implements ArrayAccess, IteratorAggregate
+class Accessor implements ArrayAccess, IteratorAggregate
 {
-
     public $config = array();
 
     public $cache = array();
@@ -17,12 +16,12 @@ class Accessor
         $this->config = $config;
     }
 
-    public function getIterator() 
+    public function getIterator()
     {
         return new ArrayIterator($this->config);
     }
     
-    public function offsetSet($name,$value)
+    public function offsetSet($name, $value)
     {
         $this->config[ $name ] = $value;
     }
@@ -54,7 +53,7 @@ class Accessor
 
     public function isEmpty()
     {
-        return null === $this->config || empty( $this->config );
+        return null === $this->config || empty($this->config);
     }
 
     public function __get($name)
@@ -69,36 +68,34 @@ class Accessor
      * @param string $key config key
      * @return mixed
      */
-    public function lookup( $key )
+    public function lookup($key)
     {
-        if ( isset($this->cache[$key]) ) {
+        if (isset($this->cache[$key])) {
             return $this->cache[$key];
         }
 
-        if ( isset($this->config[ $key ]) ) {
-            if ( is_array( $this->config[ $key ] ) ) {
+        if (isset($this->config[ $key ])) {
+            if (is_array($this->config[ $key ])) {
                 return $this->cache[$key] = new self($this->config[ $key ]);
             }
             return $this->cache[$key] = $this->config[ $key ];
         }
-        if ( strchr( $key , '.' ) !== false ) {
-            $parts = explode( '.' , $key );
+        if (strchr($key, '.') !== false) {
+            $parts = explode('.', $key);
             $ref = $this->config;
-            while ( $refKey = array_shift( $parts ) ) {
-                if ( is_array($ref) && isset($ref[ $refKey ]) ) {
+            while ($refKey = array_shift($parts)) {
+                if (is_array($ref) && isset($ref[ $refKey ])) {
                     $ref = & $ref[ $refKey ];
                     continue;
                 } else {
                     return null;
                 }
             }
-            if ( is_array($ref) ) {
+            if (is_array($ref)) {
                 return $this->cache[$key] = new self($ref);
             }
             return $this->cache[$key] = $ref;
         }
         return null;
     }
-    
 }
-

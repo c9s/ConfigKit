@@ -11,15 +11,16 @@ use Symfony\Component\Yaml\Yaml;
 use Symfony\Component\Yaml\Dumper;
 use Exception;
 
-
 global $extensionSupport;
 $extensionSupport = extension_loaded('yaml');
 
-class ConfigFileException extends Exception {  }
+class ConfigFileException extends Exception
+{
+}
 
 class ConfigCompiler
 {
-    static $statCheck = true;
+    public static $statCheck = true;
 
     public static function format_supported($filename)
     {
@@ -32,10 +33,10 @@ class ConfigCompiler
         $content = file_get_contents($sourceFile);
         if ($content[0] === '{') {
             return \json_decode($content);
-        } else if (strpos($content,'<?php') === 0 ) {
+        } elseif (strpos($content, '<?php') === 0) {
             return require $sourceFile;
         } else {
-            if  (extension_loaded('yaml')) {
+            if (extension_loaded('yaml')) {
                 return \yaml_parse($content);
             } else {
                 return Yaml::parse($content);
@@ -43,7 +44,7 @@ class ConfigCompiler
         }
     }
 
-    public static function _compile_file($sourceFile,$compiledFile, $overrideConfig = null)
+    public static function _compile_file($sourceFile, $compiledFile, $overrideConfig = null)
     {
         $config = self::parse($sourceFile);
 
@@ -53,11 +54,11 @@ class ConfigCompiler
             }
             $config = array_merge($config, $overrideConfig);
         }
-        self::write($compiledFile,$config);
+        self::write($compiledFile, $config);
 
         // inline apc cache
         if (extension_loaded('apc')) {
-            apc_store($sourceFile . filemtime($sourceFile) , $config);
+            apc_store($sourceFile . filemtime($sourceFile), $config);
         }
         return $config;
     }
@@ -65,7 +66,8 @@ class ConfigCompiler
     /**
      * Write config array into the YAML file. using Symfony YAML component.
      */
-    public static function write_yaml($yamlFile, $config) {
+    public static function write_yaml($yamlFile, $config)
+    {
         $yaml = '';
         if (extension_loaded('yaml')) {
             $yaml = yaml_emit($config, YAML_UTF8_ENCODING);
@@ -77,29 +79,31 @@ class ConfigCompiler
 
     public static function write($compiledFile, $config)
     {
-        if ( file_put_contents( $compiledFile , '<?php return ' . var_export($config,true) . ';' ) === false ) {
+        if (file_put_contents($compiledFile, '<?php return ' . var_export($config, true) . ';') === false) {
             throw new ConfigFileException("Can not write config file.");
         }
     }
 
 
     /**
-     * Test if a the source file is updated, and the compiled cache file needs 
+     * Test if a the source file is updated, and the compiled cache file needs
      * to be updated.
      *
-     * @param path $sourceFile 
+     * @param path $sourceFile
      * @param path $compiledFile
      *
      * @return bool true means compilation is needed. false means we can ignore it.
      */
-    public static function test($sourceFile, $compiledFile) {
+    public static function test($sourceFile, $compiledFile)
+    {
         if (file_exists($compiledFile)) {
             return \futil_mtime_compare($sourceFile, $compiledFile) > 0;
         }
         return true;
     }
 
-    public static function compiled_filename($sourceFile) {
+    public static function compiled_filename($sourceFile)
+    {
         return futil_replace_extension($sourceFile, 'php');
     }
 
@@ -107,17 +111,18 @@ class ConfigCompiler
     /**
      * Compile the source file to cache file.
      *
-     * @param path $sourceFile 
+     * @param path $sourceFile
      * @param path $compiledFile
      *
      * @return path the compiled file path
      */
-    public static function compile($sourceFile, $compiledFile = null) { 
-        if ( ! $compiledFile ) {
+    public static function compile($sourceFile, $compiledFile = null)
+    {
+        if (! $compiledFile) {
             $compiledFile = self::compiled_filename($sourceFile);
         }
         if (self::test($sourceFile, $compiledFile)) {
-            self::_compile_file($sourceFile,$compiledFile);
+            self::_compile_file($sourceFile, $compiledFile);
         }
         return $compiledFile;
     }
@@ -126,12 +131,13 @@ class ConfigCompiler
     /**
      * override the original config and compile to cache.
      */
-    public static function override_compile($sourceFile, $overrideConfig, $compiledFile = null) {
-        if ( ! $compiledFile ) {
+    public static function override_compile($sourceFile, $overrideConfig, $compiledFile = null)
+    {
+        if (! $compiledFile) {
             $compiledFile = \futil_replace_extension($sourceFile, 'php');
         }
         if (self::test($sourceFile, $compiledFile)) {
-            self::_compile_file($sourceFile,$compiledFile, $overrideConfig);
+            self::_compile_file($sourceFile, $compiledFile, $overrideConfig);
         }
         return $compiledFile;
     }
@@ -145,15 +151,16 @@ class ConfigCompiler
                 return $cache;
             }
         }
-        if ((!$statCheck || !self::$statCheck) && ($compiledFile && file_exists($compiledFile)) ) {
+        if ((!$statCheck || !self::$statCheck) && ($compiledFile && file_exists($compiledFile))) {
             return require $compiledFile;
         }
         $file = self::compile($sourceFile, $compiledFile);
         return require $file;
     }
 
-    public static function unlink($sourceFile,$compiledFile = null) {
-        $file = self::compile($sourceFile,$compiledFile);
+    public static function unlink($sourceFile, $compiledFile = null)
+    {
+        $file = self::compile($sourceFile, $compiledFile);
         return unlink($file);
     }
 }

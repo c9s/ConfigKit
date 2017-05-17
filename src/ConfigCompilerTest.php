@@ -11,10 +11,11 @@ class ConfigCompilerTest extends \PHPUnit\Framework\TestCase
         is('tests/ConfigKit/data/framework.php', $compiledFile);
     }
 
-    public function testWriteYaml() {
+    public function testWriteYaml()
+    {
         $config = array( "foo" => 1, "bar" => 2 );
         $outFile = "tests/.test.yml";
-        ok( ConfigCompiler::write_yaml($outFile, $config) );
+        ok(ConfigCompiler::write_yaml($outFile, $config));
         path_ok($outFile);
         $compiledFile = ConfigCompiler::compile($outFile);
         path_ok($compiledFile);
@@ -26,17 +27,16 @@ class ConfigCompilerTest extends \PHPUnit\Framework\TestCase
     {
         $config = ConfigCompiler::load('tests/ConfigKit/data/framework.yml');
         ok($config);
-        is('Phifty',$config['ApplicationName']);
+        is('Phifty', $config['ApplicationName']);
     }
 
 
     /**
      * @depends testLoad
      */
-    function testUnlink()
+    public function testUnlink()
     {
         $ret = ConfigCompiler::unlink('tests/ConfigKit/data/framework.yml');
         $this->assertTrue($ret);
     }
 }
-
