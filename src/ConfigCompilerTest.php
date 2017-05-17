@@ -35,7 +35,8 @@ class ConfigCompilerTest extends \PHPUnit\Framework\TestCase
      */
     function testUnlink()
     {
-        ConfigCompiler::unlink('tests/ConfigKit/data/framework.yml');
+        $ret = ConfigCompiler::unlink('tests/ConfigKit/data/framework.yml');
+        $this->assertTrue($ret);
     }
 }
 
