@@ -4,11 +4,28 @@ namespace ConfigKit;
 
 class ConfigCompilerTest extends \PHPUnit\Framework\TestCase
 {
+    public function testParsePhpFormatConfig()
+    {
+        $config = ConfigCompiler::parse('tests/fixture/php_config.php');
+        $this->assertEquals([
+            'a' => 123,
+        ], $config);
+    }
+
+    public function testParseYamlFormatWithoutDashes()
+    {
+        $config = ConfigCompiler::parse('tests/fixture/yaml_without_dashes.yml');
+        $this->assertEquals([
+            'ApplicationName' => 'Phifty',
+            'ApplicationID' => 'phifty',
+            'ApplicationUUID' => '9fc933c0-70f9-11e1-9095-3c07541dfc0c',
+        ], $config);
+    }
+
     public function testCompile()
     {
-        $compiledFile = ConfigCompiler::compile('tests/ConfigKit/data/framework.yml');
-        ok($compiledFile);
-        is('tests/ConfigKit/data/framework.php', $compiledFile);
+        $compiledFile = ConfigCompiler::compile('tests/fixture/phifty.yml');
+        $this->assertEquals('tests/fixture/phifty.php', $compiledFile);
     }
 
     public function testWriteYaml()
@@ -25,7 +42,7 @@ class ConfigCompilerTest extends \PHPUnit\Framework\TestCase
 
     public function testLoad()
     {
-        $config = ConfigCompiler::load('tests/ConfigKit/data/framework.yml');
+        $config = ConfigCompiler::load('tests/fixture/phifty.yml');
         ok($config);
         is('Phifty', $config['ApplicationName']);
     }
@@ -36,7 +53,7 @@ class ConfigCompilerTest extends \PHPUnit\Framework\TestCase
      */
     public function testUnlink()
     {
-        $ret = ConfigCompiler::unlink('tests/ConfigKit/data/framework.yml');
+        $ret = ConfigCompiler::unlink('tests/fixture/phifty.yml');
         $this->assertTrue($ret);
     }
 }
