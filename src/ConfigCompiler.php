@@ -145,12 +145,6 @@ class ConfigCompiler
 
     public static function load($sourceFile, $compiledFile = null, $statCheck = true)
     {
-        $cacheKey = $sourceFile . filemtime($sourceFile);
-        if (extension_loaded('apc')) {
-            if ($cache = apc_fetch($cacheKey)) {
-                return $cache;
-            }
-        }
         if ((!$statCheck || !self::$statCheck) && ($compiledFile && file_exists($compiledFile))) {
             return require $compiledFile;
         }
