@@ -56,10 +56,6 @@ class ConfigCompiler
         }
         self::write($compiledFile, $config);
 
-        // inline apc cache
-        if (extension_loaded('apc')) {
-            apc_store($sourceFile . filemtime($sourceFile), $config);
-        }
         return $config;
     }
 
