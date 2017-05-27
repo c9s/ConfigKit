@@ -31,6 +31,11 @@ class ConfigCompiler
     public static function parse($sourceFile)
     {
         $content = file_get_contents($sourceFile);
+
+        if (false === $content) {
+            throw new \RuntimeException("failed to parse '$sourceFile'");
+        }
+
         if ($content[0] === '{') {
             return \json_decode($content);
         } elseif (strpos($content, '<?php') === 0) {
