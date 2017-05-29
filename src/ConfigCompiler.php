@@ -32,21 +32,21 @@ class ConfigCompiler
     {
         $content = file_get_contents($sourceFile);
 
-        if (false === $content) {
+        if (!$content) {
             throw new \RuntimeException("failed to parse '$sourceFile'");
         }
 
         if ($content[0] === '{') {
             return \json_decode($content);
-        } elseif (strpos($content, '<?php') === 0) {
+        } else if (strpos($content, '<?php') === 0) {
             return require $sourceFile;
-        } else {
-            if (extension_loaded('yaml')) {
-                return \yaml_parse($content);
-            } else {
-                return Yaml::parse($content);
-            }
         }
+
+        if (extension_loaded('yaml')) {
+            return \yaml_parse($content);
+        }
+
+        return Yaml::parse($content);
     }
 
     public static function _compile_file($sourceFile, $compiledFile, $overrideConfig = null)
