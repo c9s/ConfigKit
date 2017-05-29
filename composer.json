@@ -20,6 +20,7 @@
     "require-dev": {
         "corneltek/phpunit-testmore": "dev-master"
     },
+    "extra": { "branch-alias": { "dev-master": "1.6.x-dev" } },
     "autoload": {
         "psr-4": {
             "ConfigKit\\": "src/"
